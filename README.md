@@ -1,12 +1,12 @@
-#Universal Plasmid Maker  
-#BBL-434 Assignment 1
+Universal Plasmid Maker  
+BBL-434 Assignment 1
 
 This repository contains a Python-based tool to generate a plasmid DNA sequence from a given DNA insert and a plasmid design specification file. The script reads biological input files, adds essential plasmid backbone components and produces a final plasmid sequence in FASTA format.
 The project demonstrates basic bioinformatics scripting, file parsing, and sequence handling using Biopython.
 
 --------------------------------------------------
 
-##Problem Description
+Problem Description
 
 The task is to design a universal plasmid generator that takes:
 1. A DNA sequence file (Input.fa)
@@ -16,7 +16,7 @@ Based on the design file and the concepts discussed in the reference paper, the 
 
 --------------------------------------------------
 
-##Methodology
+Methodology
 
 The script performs the following steps:
 
@@ -28,7 +28,7 @@ The script performs the following steps:
 
 --------------------------------------------------
 
-##Repository Structure
+Repository Structure
 
 BBL-434-ASSIGNMENT1/
 │
@@ -40,7 +40,7 @@ BBL-434-ASSIGNMENT1/
 
 --------------------------------------------------
 
-##Requirements
+Requirements
 
 - Python 3
 - Biopython
