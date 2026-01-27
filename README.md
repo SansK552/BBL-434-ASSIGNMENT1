@@ -32,13 +32,13 @@ Repository Structure
 
 BBL-434-ASSIGNMENT1/
 
-├── Plasmid_maker.py    Main Python script 
+└── Plasmid_maker.py    Main Python script 
 
-├── Input.fa            Input DNA sequence (FASTA format)
+└── Input.fa            Input DNA sequence (FASTA format)
 
-├── Design.txt          Plasmid design specification file
+└── Design.txt          Plasmid design specification file
 
-├── Output.fa           Generated plasmid sequence
+└── Output.fa           Generated plasmid sequence
 
 └── README.md           Project documentation
 
