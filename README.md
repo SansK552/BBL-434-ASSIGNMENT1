@@ -89,4 +89,4 @@ Notes
 Author
 
 Sanskruti K  
-BBL-434 Bioinformatics Laboratory
+BBL-434 Bioinformatics
