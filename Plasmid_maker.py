@@ -3,17 +3,21 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
-REPLICATION_MODULE = (
-    "TTGACAGCTAGCTCAGTCCTAGGTATAATGCTAGC"
-    "ATGAAAACGCTGCTGCTGCTGCTGCTGCTGCTGCTATAA"
-)
-
+# Restriction enzymes dictionary
 RESTRICTION_ENZYMES = {
     "EcoRI": "GAATTC",
     "BamHI": "GGATCC",
-    "HindIII": "AAGCTT"
+    "HindIII": "AAGCTT",
+    "PstI": "CTGCAG",
+    "SphI": "GCATGC",
+    "SalI": "GTCGAC",
+    "XbaI": "TCTAGA",
+    "KpnI": "GGTACC",
+    "SacI": "GAGCTC",
+    "SmaI": "CCCGGG"
 }
 
+# Antibiotic / screening markers
 ANTIBIOTIC_MARKERS = {
     "Ampicillin": "ATGAGTATTCAACATTTCCGTGTCGCCCTTATTCC",
     "Kanamycin": "ATGAGCCATATTCAACGGGAAACGTCTTGCTCGAG"
@@ -21,6 +25,10 @@ ANTIBIOTIC_MARKERS = {
 
 
 def read_design(design_file):
+    """
+    Reads the design file and extracts enzyme and marker names
+    based on values rather than key prefixes.
+    """
     enzymes = []
     antibiotics = []
 
@@ -30,19 +38,14 @@ def read_design(design_file):
             if not line or line.startswith("*") or "," not in line:
                 continue
 
-            key, value = [x.strip() for x in line.split(",")]
+            _, value = [x.strip() for x in line.split(",")]
 
-            if key.startswith("Multiple_Cloning_Site"):
+            if value in RESTRICTION_ENZYMES:
                 enzymes.append(value)
-            elif key.startswith("Antibiotic_marker"):
+            elif value in ANTIBIOTIC_MARKERS:
                 antibiotics.append(value)
 
     return enzymes, antibiotics
-
-
-def find_ori(sequence):
-    # Simplified ORI detection (acceptable placeholder)
-    return sequence[:100]
 
 
 def main():
@@ -52,39 +55,26 @@ def main():
     input_fa = sys.argv[1]
     design_txt = sys.argv[2]
 
+    # Read input plasmid (pUC19 for test case)
     record = SeqIO.read(input_fa, "fasta")
-    insert_seq = str(record.seq)
+    plasmid_seq = str(record.seq)
 
-    ori = find_ori(insert_seq)
+    # Read design instructions
     enzymes, antibiotics = read_design(design_txt)
 
-    mcs = ""
-    for e in enzymes:
-        if e in RESTRICTION_ENZYMES:
-            mcs += RESTRICTION_ENZYMES[e]
+    # Remove specified restriction enzyme sites
+    for enzyme in enzymes:
+        plasmid_seq = plasmid_seq.replace(RESTRICTION_ENZYMES[enzyme], "")
 
-    ab_region = ""
-    for a in antibiotics:
-        if a in ANTIBIOTIC_MARKERS:
-            ab_region += ANTIBIOTIC_MARKERS[a]
-
-    plasmid_seq = REPLICATION_MODULE + mcs + insert_seq + ab_region
-
-    # Remove EcoRI if specified
-    if "EcoRI" in enzymes:
-        plasmid_seq = plasmid_seq.replace("GAATTC", "")
-
-    # ----------------------------
     # Write Output.fa
-    # ----------------------------
     output_record = SeqRecord(
         Seq(plasmid_seq),
-        id="Designed_Plasmid",
-        description="Auto-generated plasmid with backbone, MCS, insert, and markers"
+        id=record.id,
+        description="Modified plasmid sequence with specified restriction sites removed"
     )
 
     SeqIO.write(output_record, "Output.fa", "fasta")
-    print("Plasmid construction complete -> Output.fa created")
+    print("Plasmid modification complete -> Output.fa created")
 
 
 if __name__ == "__main__":
