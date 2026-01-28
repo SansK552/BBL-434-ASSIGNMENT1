@@ -40,13 +40,15 @@ BBL-434-ASSIGNMENT1/
 
 |-- data/
 
-   |-- markers.tab
+      |-- markers.tab
    
 |-- tests/
 
-   |-- pUC19.fa
-   
-   |-- Design_pUC19.txt
+      |-- Design_pUC19.txt
+      
+      |-- pUC19.fa
+
+|-- Output.fa
    
 |-- plasmid_maker.py
 
