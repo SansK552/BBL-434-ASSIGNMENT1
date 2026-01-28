@@ -1,0 +1,2 @@
+Multiple_Cloning_Site1, EcoRI
+Antibiotic_marker1, Ampicillin

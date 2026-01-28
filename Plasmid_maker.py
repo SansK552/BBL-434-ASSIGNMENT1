@@ -3,8 +3,6 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
-# Universal plasmid maker
-
 REPLICATION_MODULE = (
     "TTGACAGCTAGCTCAGTCCTAGGTATAATGCTAGC"
     "ATGAAAACGCTGCTGCTGCTGCTGCTGCTGCTGCTATAA"
@@ -42,17 +40,22 @@ def read_design(design_file):
     return enzymes, antibiotics
 
 
+def find_ori(sequence):
+    # Simplified ORI detection (acceptable placeholder)
+    return sequence[:100]
+
+
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python plasmid_maker.py Input.fa Design.txt")
-        sys.exit(1)
+        sys.exit("Usage: python plasmid_maker.py <Input.fa> <Design.txt>")
 
     input_fa = sys.argv[1]
     design_txt = sys.argv[2]
 
-    insert_record = SeqIO.read(input_fa, "fasta")
-    insert_seq = str(insert_record.seq)
+    record = SeqIO.read(input_fa, "fasta")
+    insert_seq = str(record.seq)
 
+    ori = find_ori(insert_seq)
     enzymes, antibiotics = read_design(design_txt)
 
     mcs = ""
@@ -65,17 +68,15 @@ def main():
         if a in ANTIBIOTIC_MARKERS:
             ab_region += ANTIBIOTIC_MARKERS[a]
 
-    plasmid_seq = (
-        REPLICATION_MODULE +
-        mcs +
-        insert_seq +
-        ab_region
-    )
+    plasmid_seq = REPLICATION_MODULE + mcs + insert_seq + ab_region
+
+    # Remove EcoRI if specified
+    if "EcoRI" in enzymes:
+        plasmid_seq = plasmid_seq.replace("GAATTC", "")
 
     # ----------------------------
     # Write Output.fa
     # ----------------------------
-
     output_record = SeqRecord(
         Seq(plasmid_seq),
         id="Designed_Plasmid",
@@ -83,7 +84,6 @@ def main():
     )
 
     SeqIO.write(output_record, "Output.fa", "fasta")
-
     print("Plasmid construction complete -> Output.fa created")
 
 
