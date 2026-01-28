@@ -38,15 +38,14 @@ Repository Structure
 BBL-434-ASSIGNMENT1/
 
 |-- data/
-
-   |-- Design.txt
    
-   |-- markers.tab
+      |-- markers.tab
+   
 |-- tests/
 
-   |-- pUC19.fa
+      |-- pUC19.fa
    
-   |-- Design_pUC19.txt
+      |-- Design_pUC19.txt
    
 |-- plasmid_maker.py
 
