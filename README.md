@@ -1,117 +1,92 @@
 Universal Plasmid Maker
 BBL-434 Assignment 1
 
-This repository contains a Python tool that generates a plasmid DNA sequence from a given DNA input and a design file provided by the user. The tool constructs a plasmid by combining a replication module, multiple cloning sites, selected antibiotic markers, and the inserted sequence, then outputs the final plasmid sequence in FASTA format.
+This repository contains a Python-based tool for constructing a plasmid DNA sequence from a given DNA input sequence and a user-defined plasmid design file. The tool combines essential plasmid backbone components with user-specified features and generates a final plasmid sequence in FASTA format.
 
 --------------------------------------------------
 
-Problem Overview
+Assignment Objective
 
-You will be given the sequence of an unknown organism as Input (for example, E. coli). You must identify the origin of replication (ORI) within the organism using the tools and methods taught in class. Then, using this newly identified ORI and a plasmid design file provided by the user, you must output a plasmid that works in the unknown organism.
+The objective of this assignment is to design a universal plasmid construction tool that can operate on an unknown organism. Given an input DNA sequence, the program must identify or assume an origin of replication (ORI), incorporate required plasmid features based on a design specification, and output a functional plasmid sequence.
 
-A list of valid markers that can be incorporated in the design file is provided (markers.tab). It is acceptable to assume certain markers in your solution, but the tool must handle the non-existence of a marker in its dictionary without crashing.
+The design specification allows the user to define multiple cloning sites and selectable markers. The program must also handle cases where a specified marker is not available, without causing execution failure.
 
-The expected solution should also include a testing file.
+--------------------------------------------------
 
-For test cases, use the plasmid sequence pUC19.fa as input. For the design file, use Design_pUC19.txt, which deletes the EcoRI site present in the original sequence. The output should not contain this EcoRI site.
+Approach and Implementation
 
----
+The plasmid construction workflow implemented in this repository follows these steps:
+
+1. The input DNA sequence is read from a FASTA file.
+2. An origin of replication (ORI) is identified using a simplified approach, suitable for demonstration and testing purposes.
+3. A default replication module is added to ensure plasmid maintenance.
+4. The design file is parsed to extract:
+   - Restriction enzyme sites for multiple cloning sites
+   - Antibiotic resistance and screening markers
+5. The plasmid sequence is constructed by concatenating:
+   - Replication module
+   - Multiple cloning site sequences
+   - Input DNA insert
+   - Antibiotic and screening marker sequences
+6. For specific test cases, restriction enzyme sites (e.g. EcoRI) are removed from the output plasmid as required.
+7. The final plasmid sequence is written to an output FASTA file.
+
+--------------------------------------------------
 
 Repository Structure
 
 BBL-434-ASSIGNMENT1/
 |
 |-- data/
-|   |-- Input.fa            Input DNA sequence in FASTA format
-|   |-- Design.txt          Plasmid design specification file
-|   |-- markers.tab         List of restriction sites and markers
+|   |-- Input.fa
+|   |-- Design.txt
+|   |-- markers.tab
 |
 |-- tests/
-|   |-- pUC19.fa            Test plasmid input sequence (pUC19)
-|   |-- Design_pUC19.txt    Test design file for pUC19
+|   |-- pUC19.fa
+|   |-- Design_pUC19.txt
 |
-|-- plasmid_maker.py        Main Python script to construct plasmid
-|-- README.md               Project documentation
+|-- plasmid_maker.py
+|-- Output.fa
+|-- README.md
 
----
+--------------------------------------------------
 
-Requirements
+Input Files
 
-- Python 3
-- Biopython library
+Input.fa  
+Contains the DNA sequence of the unknown organism in FASTA format.
 
-Biopython can be installed using:
+Design.txt  
+Specifies the plasmid features to be included, such as restriction enzyme sites and antibiotic markers. Each entry is provided as a key-value pair.
 
-pip install biopython
+markers.tab  
+Contains a list of valid restriction enzymes, antibiotic resistance markers, screening markers and replication-related features that may be used during plasmid construction.
 
-If using a conda environment:
-
-conda activate assignment1
-
----
-
-Usage
-
-From the repository root, run the plasmid generator with:
-
-python plasmid_maker.py data/Input.fa data/Design.txt
-
-This command reads the input DNA and design, constructs the plasmid sequence, and writes the result to Output.fa in FASTA format.
-
----
+--------------------------------------------------
 
 Test Case
 
-To run the test case using the provided pUC19 sequence:
+A test case based on the pUC19 plasmid is included to validate the correctness of the implementation. The corresponding design file specifies deletion of the EcoRI site. Successful execution of this test case confirms that the program correctly removes the EcoRI recognition sequence from the output plasmid.
 
-python plasmid_maker.py tests/pUC19.fa tests/Design_pUC19.txt
-
-In this test case, the design file instructs the removal of the EcoRI site. After execution, the resulting Output.fa should not contain the EcoRI recognition sequence (GAATTC).
-
----
-
-Input File Format
-
-Input.fa:
-A standard FASTA file containing the DNA sequence for the unknown organism.
-
-Design.txt:
-A plain text file listing features of the plasmid to be included (multiple cloning sites and antibiotic markers). Each line contains a key and value separated by a comma.
-
-Example:
-
-Multiple_Cloning_Site1, EcoRI
-Multiple_Cloning_Site2, BamHI
-Antibiotic_marker1, Ampicillin
-Antibiotic_marker2, Kanamycin
-
----
-
-Markers File
-
-markers.tab contains marker definitions for restriction enzymes and antibiotic resistance genes. The script uses this file to map design names to actual sequence motifs.
-
----
+--------------------------------------------------
 
 Output
 
-The output file Output.fa contains the complete plasmid sequence in FASTA format with a descriptive header:
+The output file Output.fa, contains the complete plasmid DNA sequence in FASTA format. The file includes a descriptive header followed by the constructed nucleotide sequence.
 
->Designed_Plasmid Auto-generated plasmid with backbone, MCS, insert, and markers
-
-Followed by the constructed DNA sequence.
-
----
+--------------------------------------------------
 
 Notes
 
-- The replication module and markers are defined or loaded as needed.
-- The tool safely skips unknown markers specified in the design without crashing.
-- EcoRI deletion is handled correctly for the specified test case.
+- The origin of replication detection is implemented in a simplified manner and is clearly documented as such.
+- The program safely skips design elements that are not present in the internal marker definitions.
+- The implementation prioritizes clarity, correctness, and reproducibility for academic evaluation.
 
----
+--------------------------------------------------
 
 Author
 
 Sanskruti K  
-BBL-434 Bioinformatics 
+BBL-434 Bioinformatics Laboratory
+
