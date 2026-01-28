@@ -1,0 +1,15 @@
+EcoRI	GAATTC
+BamHI	GGATCC
+HindIII	AAGCTT
+PstI	CTGCAG
+KpnI	GGTACC
+SacI	GAGCTC
+SalI	GTCGAC
+XbaI	TCTAGA
+SmaI	CCCGGG
+AmpR	Ampicillin
+KanR	Kanamycin
+CmR	Chloramphenicol
+TetR	Tetracycline
+SpecR	Spectinomycin
+lacZ_alpha	Blue_White_Selection
