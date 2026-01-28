@@ -36,26 +36,27 @@ The plasmid construction workflow implemented in this repository follows these s
 Repository Structure
 
 BBL-434-ASSIGNMENT1/
-|
+
 |-- data/
-|   |-- Input.fa
-|   |-- Design.txt
-|   |-- markers.tab
-|
+
+   |-- Design.txt
+   
+   |-- markers.tab
 |-- tests/
-|   |-- pUC19.fa
-|   |-- Design_pUC19.txt
-|
+
+   |-- pUC19.fa
+   
+   |-- Design_pUC19.txt
+   
 |-- plasmid_maker.py
+
 |-- Output.fa
+
 |-- README.md
 
 --------------------------------------------------
 
 Input Files
-
-Input.fa  
-Contains the DNA sequence of the unknown organism in FASTA format.
 
 Design.txt  
 Specifies the plasmid features to be included, such as restriction enzyme sites and antibiotic markers. Each entry is provided as a key-value pair.
